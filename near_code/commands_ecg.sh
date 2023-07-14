@@ -1,0 +1,17 @@
+python train.py \
+--algorithm astar-near \
+--exp_name ecg-example \
+--trial 1 \
+--train_data data/ecg/x_train_flat.npy \
+--test_data data/ecg/x_test_flat.npy \
+--train_labels data/ecg/y_train_flat.npy \
+--test_labels data/ecg/y_test_flat.npy \
+--input_type "list" \
+--output_type "atom" \
+--input_size 144 \
+--output_size 9 \
+--num_labels 2 \
+--lossfxn "crossentropy" \
+--normalize \
+--max_depth 5 \
+--frontier_capacity 5

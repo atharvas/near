@@ -1,0 +1,173 @@
+INFO:root:Starting experiment ecg-example_astar-near_001
+
+INFO:root:Training root program ...
+INFO:root:Validation score is: 0.4355
+INFO:root:Average f1-score is: 0.5645
+INFO:root:Hamming accuracy is: 0.6296
+INFO:root:Initial training complete. Score from program is 0.5645 
+
+INFO:root:CURRENT program has fscore inf: Start(ListToAtomModule)
+INFO:root:Current depth of program is 0
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(AtomToAtomModule))
+INFO:root:Validation score is: 0.2302
+INFO:root:Average f1-score is: 0.7698
+INFO:root:Hamming accuracy is: 0.7949
+INFO:root:Time to train child 3.852
+INFO:root:1 total children trained
+INFO:root:DEBUG: f-score 0.24016318220396515
+INFO:root:Frontier length is: 1
+INFO:root:Total time elapsed is 3.860
+INFO:root:CURRENT program has fscore 0.2402: Start(Fold(AtomToAtomModule))
+INFO:root:Current depth of program is 1
+INFO:root:Creating children for current node/program
+INFO:root:4 total children to train for current node
+INFO:root:Training child program: Start(Fold(Add(AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Validation score is: 0.2825
+INFO:root:Average f1-score is: 0.7175
+INFO:root:Hamming accuracy is: 0.7550
+INFO:root:Time to train child 3.644
+INFO:root:2 total children trained
+INFO:root:DEBUG: f-score 0.31246033691829
+INFO:root:Training child program: Start(Fold(Multiply(AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Validation score is: 0.3107
+INFO:root:Average f1-score is: 0.6893
+INFO:root:Hamming accuracy is: 0.7313
+INFO:root:Time to train child 3.663
+INFO:root:3 total children trained
+INFO:root:DEBUG: f-score 0.34070174826842103
+INFO:root:Training child program: Start(Fold(SimpleITE(AtomToAtomModule, AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Validation score is: 0.2012
+INFO:root:Average f1-score is: 0.7988
+INFO:root:Hamming accuracy is: 0.8167
+INFO:root:Time to train child 3.915
+INFO:root:4 total children trained
+INFO:root:DEBUG: f-score 0.2411724302038651
+INFO:root:Training child program: Start(Fold(FullFeatureSelect()))
+INFO:root:Validation score is: 0.6728
+INFO:root:Average f1-score is: 0.3272
+INFO:root:Hamming accuracy is: 0.3930
+INFO:root:Time to train child 5.536
+INFO:root:5 total children trained
+INFO:root:DEBUG: f-score 0.6827952713787604
+INFO:root:New BEST program found:
+INFO:root:Start(Fold(FullFeatureSelect()))
+INFO:root:struct_cost 0.0100 | score 0.6728 | path_cost 0.6828 | time 20.7009
+INFO:root:Frontier length is: 3
+INFO:root:Total time elapsed is 20.724
+INFO:root:CURRENT program has fscore 0.2412: Start(Fold(SimpleITE(AtomToAtomModule, AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Current depth of program is 2
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(SimpleITE(FullFeatureSelect(), AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Validation score is: 0.2992
+INFO:root:Average f1-score is: 0.7008
+INFO:root:Hamming accuracy is: 0.7419
+INFO:root:Time to train child 3.952
+INFO:root:6 total children trained
+INFO:root:DEBUG: f-score 0.3391793183501432
+INFO:root:Frontier length is: 3
+INFO:root:Total time elapsed is 24.776
+INFO:root:CURRENT program has fscore 0.3125: Start(Fold(Add(AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Current depth of program is 2
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(Add(FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Validation score is: 0.3529
+INFO:root:Average f1-score is: 0.6471
+INFO:root:Hamming accuracy is: 0.6985
+INFO:root:Time to train child 3.701
+INFO:root:7 total children trained
+INFO:root:DEBUG: f-score 0.3828525551832058
+INFO:root:Frontier length is: 3
+INFO:root:Total time elapsed is 28.573
+INFO:root:CURRENT program has fscore 0.3392: Start(Fold(SimpleITE(FullFeatureSelect(), AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Current depth of program is 3
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(SimpleITE(FullFeatureSelect(), FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Validation score is: 0.3269
+INFO:root:Average f1-score is: 0.6731
+INFO:root:Hamming accuracy is: 0.7200
+INFO:root:Time to train child 3.848
+INFO:root:8 total children trained
+INFO:root:DEBUG: f-score 0.3669237294716639
+INFO:root:Frontier length is: 3
+INFO:root:Total time elapsed is 32.631
+INFO:root:CURRENT program has fscore 0.3407: Start(Fold(Multiply(AtomToAtomModule, AtomToAtomModule)))
+INFO:root:Current depth of program is 2
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(Multiply(FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Validation score is: 0.4541
+INFO:root:Average f1-score is: 0.5459
+INFO:root:Hamming accuracy is: 0.6141
+INFO:root:Time to train child 3.783
+INFO:root:9 total children trained
+INFO:root:DEBUG: f-score 0.4840760531339191
+INFO:root:Frontier length is: 3
+INFO:root:Total time elapsed is 36.517
+INFO:root:CURRENT program has fscore 0.3669: Start(Fold(SimpleITE(FullFeatureSelect(), FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Current depth of program is 4
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(SimpleITE(FullFeatureSelect(), FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:Validation score is: 0.5120
+INFO:root:Average f1-score is: 0.4880
+INFO:root:Hamming accuracy is: 0.5616
+INFO:root:Time to train child 4.942
+INFO:root:10 total children trained
+INFO:root:DEBUG: f-score 0.552018443596346
+INFO:root:New BEST program found:
+INFO:root:Start(Fold(SimpleITE(FullFeatureSelect(), FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:struct_cost 0.0400 | score 0.5120 | path_cost 0.5520 | time 41.6180
+INFO:root:Frontier length is: 2
+INFO:root:Total time elapsed is 41.684
+INFO:root:CURRENT program has fscore 0.3829: Start(Fold(Add(FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Current depth of program is 3
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(Add(FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:Validation score is: 0.7160
+INFO:root:Average f1-score is: 0.2840
+INFO:root:Hamming accuracy is: 0.3394
+INFO:root:Time to train child 5.497
+INFO:root:11 total children trained
+INFO:root:DEBUG: f-score 0.7460180281881011
+INFO:root:Frontier length is: 1
+INFO:root:Total time elapsed is 47.307
+INFO:root:CURRENT program has fscore 0.4841: Start(Fold(Multiply(FullFeatureSelect(), AtomToAtomModule)))
+INFO:root:Current depth of program is 3
+INFO:root:Creating children for current node/program
+INFO:root:1 total children to train for current node
+INFO:root:Training child program: Start(Fold(Multiply(FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:Validation score is: 0.3022
+INFO:root:Average f1-score is: 0.6978
+INFO:root:Hamming accuracy is: 0.7274
+INFO:root:Time to train child 5.532
+INFO:root:12 total children trained
+INFO:root:DEBUG: f-score 0.3322458907786262
+INFO:root:New BEST program found:
+INFO:root:Start(Fold(Multiply(FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:struct_cost 0.0300 | score 0.3022 | path_cost 0.3322 | time 52.9826
+INFO:root:Frontier length is: 0
+INFO:root:Total time elapsed is 53.025
+INFO:root:
+
+INFO:root:BEST programs found:
+INFO:root:Start(Fold(FullFeatureSelect()))
+INFO:root:struct_cost 0.0100 | score 0.6728 | path_cost 0.6828 | time 20.7009
+INFO:root:Start(Fold(SimpleITE(FullFeatureSelect(), FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:struct_cost 0.0400 | score 0.5120 | path_cost 0.5520 | time 41.6180
+INFO:root:Start(Fold(Multiply(FullFeatureSelect(), FullFeatureSelect())))
+INFO:root:struct_cost 0.0300 | score 0.3022 | path_cost 0.3322 | time 52.9826
+INFO:root:
+
+INFO:root:Evaluating program Start(Fold(Multiply(FullFeatureSelect(), FullFeatureSelect()))) on TEST SET
+INFO:root:F1 score achieved is 0.7094
+INFO:root:Additional performance parameters: {'hamming_accuracy': 0.7353574504737295, 'unweighted_f1': 0.4970998531935119, 'all_f1s': array([0.84324979, 0.15094991])}
+
+INFO:root:ALGORITHM END 
+
+

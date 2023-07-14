@@ -61,9 +61,6 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
     validation_input, validation_output = map(list, zip(*validset))
     validation_true_vals = torch.tensor(flatten_batch(validation_output)).float().to(device)
     # TODO a little hacky, but easiest solution for now
-    if isinstance(lossfxn, nn.CrossEntropyLoss):
-        validation_true_vals = validation_true_vals.long()
-
     best_program = None
     best_metric = float('inf')
     best_additional_params = {}
@@ -73,10 +70,8 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
             batch_input, batch_output = map(list, zip(*trainset[batchidx]))
             true_vals = torch.tensor(flatten_batch(batch_output)).float().to(device)
             predicted_vals = process_batch(program, batch_input, output_type, output_size, device)
-            # TODO a little hacky, but easiest solution for now
-            if isinstance(lossfxn, nn.CrossEntropyLoss):
-                true_vals = true_vals.long()
             #print(predicted_vals.shape, true_vals.shape)
+            predicted_vals = predicted_vals.reshape_as(true_vals)
             loss = lossfxn(predicted_vals, true_vals)
             curr_optim.zero_grad()
             loss.backward()
@@ -88,6 +83,7 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
         # check score on validation set
         with torch.no_grad():
             predicted_vals = process_batch(program, validation_input, output_type, output_size, device)
+            predicted_vals = predicted_vals.reshape_as(validation_true_vals)
             metric, additional_params = evalfxn(predicted_vals, validation_true_vals, num_labels=num_labels)
 
         if use_valid_score:

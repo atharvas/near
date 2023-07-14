@@ -17,6 +17,7 @@ def test_set_eval(program, testset, output_type, output_size, num_labels, device
         test_input, test_output = map(list, zip(*testset))
         true_vals = torch.tensor(flatten_batch(test_output)).to(device)
         predicted_vals = process_batch(program, test_input, output_type, output_size, device)
+        predicted_vals = predicted_vals.reshape_as(true_vals)
         metric, additional_params = label_correctness(predicted_vals, true_vals, num_labels=num_labels)
     log_and_print("F1 score achieved is {:.4f}".format(1 - metric))
     log_and_print("Additional performance parameters: {}\n".format(additional_params))
