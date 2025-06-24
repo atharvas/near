@@ -9,6 +9,8 @@ from utils.evaluation import label_correctness
 from utils.logging import log_and_print, print_program
 from utils.training import process_batch
 
+from sklearn.metrics import classification_report
+
 
 def test_set_eval(program, testset, output_type, output_size, num_labels, device='cpu', verbose=False):
     log_and_print("\n")
@@ -16,11 +18,22 @@ def test_set_eval(program, testset, output_type, output_size, num_labels, device
     with torch.no_grad():
         test_input, test_output = map(list, zip(*testset))
         true_vals = torch.tensor(flatten_batch(test_output)).to(device)
+        # true_vals = torch.nn.functional.one_hot(true_vals.long(), num_classes=num_labels).float().to(device)
         predicted_vals = process_batch(program, test_input, output_type, output_size, device)
-        predicted_vals = predicted_vals.reshape_as(true_vals)
+        if len(predicted_vals.size()) == 3:
+            predicted_vals = predicted_vals.reshape(-1, num_labels)
+        # predicted_vals = predicted_vals.reshape_as(true_vals)
         metric, additional_params = label_correctness(predicted_vals, true_vals, num_labels=num_labels)
+
+        report = classification_report(
+            true_vals.cpu().numpy().tolist(),
+            (torch.sigmoid(predicted_vals.cpu()) > 0.5).numpy().tolist(),
+            output_dict=True
+        )
     log_and_print("F1 score achieved is {:.4f}".format(1 - metric))
     log_and_print("Additional performance parameters: {}\n".format(additional_params))
+    # raw numpy true vals and predicted vals.
+    return true_vals, predicted_vals, report
 
 def parse_args():
     parser = argparse.ArgumentParser()

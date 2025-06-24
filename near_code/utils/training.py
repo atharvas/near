@@ -1,3 +1,4 @@
+import numpy as np
 import copy
 import torch
 import torch.nn as nn
@@ -26,7 +27,7 @@ def init_optimizer(program, optimizer, lr):
     return curr_optim
 
 def process_batch(program, batch, output_type, output_size, device='cpu'):
-    batch_input = [torch.tensor(traj) for traj in batch]
+    batch_input = [torch.tensor(np.array(traj)) for traj in batch]
     batch_padded, batch_lens = pad_minibatch(batch_input, num_features=batch_input[0].size(1))
     batch_padded = batch_padded.to(device)
     out_padded = program.execute_on_batch(batch_padded, batch_lens)
@@ -59,7 +60,8 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
 
     # prepare validation set
     validation_input, validation_output = map(list, zip(*validset))
-    validation_true_vals = torch.tensor(flatten_batch(validation_output)).float().to(device)
+    validation_true_vals = torch.tensor(flatten_batch(validation_output)).to(device)
+    # validation_true_vals = torch.nn.functional.one_hot(validation_true_vals.long(), num_classes=num_labels).to(device)
     # TODO a little hacky, but easiest solution for now
     best_program = None
     best_metric = float('inf')
@@ -68,10 +70,14 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
     for epoch in range(1, num_epochs+1):
         for batchidx in range(len(trainset)):
             batch_input, batch_output = map(list, zip(*trainset[batchidx]))
-            true_vals = torch.tensor(flatten_batch(batch_output)).float().to(device)
+            true_vals = torch.tensor(flatten_batch(batch_output)).to(device)
             predicted_vals = process_batch(program, batch_input, output_type, output_size, device)
-            #print(predicted_vals.shape, true_vals.shape)
-            predicted_vals = predicted_vals.reshape_as(true_vals)
+            # true_vals = torch.nn.functional.one_hot(true_vals.long(), num_classes=num_labels).to(device)
+            # predicted_vals = predicted_vals.reshape_as(true_vals)
+            if isinstance(lossfxn, nn.CrossEntropyLoss):
+                true_vals = true_vals.long()
+            elif isinstance(lossfxn, nn.BCEWithLogitsLoss):
+                true_vals = true_vals.float()
             loss = lossfxn(predicted_vals, true_vals)
             curr_optim.zero_grad()
             loss.backward()
@@ -83,7 +89,7 @@ def execute_and_train(program, validset, trainset, train_config, output_type, ou
         # check score on validation set
         with torch.no_grad():
             predicted_vals = process_batch(program, validation_input, output_type, output_size, device)
-            predicted_vals = predicted_vals.reshape_as(validation_true_vals)
+            # predicted_vals = predicted_vals.reshape_as(validation_true_vals)
             metric, additional_params = evalfxn(predicted_vals, validation_true_vals, num_labels=num_labels)
 
         if use_valid_score:

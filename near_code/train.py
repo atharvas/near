@@ -1,3 +1,4 @@
+import json
 import argparse
 import os
 import pickle
@@ -13,7 +14,7 @@ from eval import test_set_eval
 from program_graph import ProgramGraph
 from utils.data import prepare_datasets
 from utils.evaluation import label_correctness
-from utils.logging import init_logging, print_program_dict, log_and_print
+from utils.logging import init_logging, print_program, print_program_dict, log_and_print
 
 
 def parse_args():
@@ -205,6 +206,7 @@ if __name__ == '__main__':
 
     # Run program learning algorithm
     best_programs = algorithm.run(program_graph, batched_trainset, validset, train_config, device)
+    best_program_time = 0.0
 
     if args.algorithm == "rnn":
         # special case for RNN baseline
@@ -216,11 +218,24 @@ if __name__ == '__main__':
         for item in best_programs:
             print_program_dict(item)
         best_program = best_programs[-1]["program"]
+        best_program_time = best_programs[-1]["time"]
 
     # Save best program
     pickle.dump(best_program, open(os.path.join(save_path, "program.p"), "wb"))
 
     # Evaluate best program on test set
-    test_set_eval(best_program, testset, args.output_type, args.output_size, args.num_labels, device)
+    true_vals, predicted_vals, report = test_set_eval(best_program, testset, args.output_type, args.output_size, args.num_labels, device)
+    with open(os.path.join(save_path, "test_results.json"), "w") as f:
+        json.dump(
+            dict(
+                true_vals=true_vals.cpu().numpy().tolist(),
+                predicted_vals=predicted_vals.cpu().numpy().tolist(),
+                report=report,
+                time=best_program_time,
+                program=print_program(best_program, ignore_constants=False),
+                program_str=print_program(best_program, ignore_constants=True),
+            ),
+            f,
+        )
     log_and_print("ALGORITHM END \n\n")
     

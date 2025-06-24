@@ -10,7 +10,8 @@ def flatten_batch(batch):
     new_batch = []
     for traj_list in batch:
         new_batch.extend(traj_list)
-    return new_batch
+    
+    return np.array(new_batch)
 
 def flatten_tensor(batch_out):
     return torch.cat(batch_out)
