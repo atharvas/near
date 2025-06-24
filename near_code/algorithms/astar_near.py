@@ -1,5 +1,7 @@
 import copy
 import time
+import random
+
 
 from .core import ProgramLearningAlgorithm, ProgramNodeFrontier
 from program_graph import ProgramGraph

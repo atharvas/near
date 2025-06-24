@@ -1,5 +1,8 @@
 import torch
 from sklearn.metrics import hamming_loss, f1_score
+from sklearn.metrics import roc_curve
+from torch import nn
+import numpy as np
 
 
 def compute_average_f1_score(predicted, truth, num_labels):
@@ -22,7 +25,10 @@ def label_correctness(predictions, truths, num_labels=1):
 
     additional_scores = {}
     if len(predictions.size()) == 1:
-        predictions = torch.sigmoid(predictions) > 0.5
+        fpr, tpr, thresholds = roc_curve(truths.cpu().numpy(), predictions.cpu().numpy())
+        threshold = thresholds[np.argmax(tpr - fpr)]
+
+        predictions = torch.sigmoid(predictions) < threshold
     else:
         assert len(predictions.size()) == 2
         predictions = torch.max(predictions, dim=-1)[1]
